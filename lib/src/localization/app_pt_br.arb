@@ -1,0 +1,8 @@
+{
+    "@@locale": "pt_BR",
+    "appTitle": "Minhas Classes",
+    "@appTitle": {
+      "description": "The title of the application"
+    }
+  }
+  
