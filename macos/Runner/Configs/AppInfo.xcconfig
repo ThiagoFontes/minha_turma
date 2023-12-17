@@ -8,7 +8,7 @@
 PRODUCT_NAME = myclasses
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = dev.thiagofontes.myclasses.myclasses
+PRODUCT_BUNDLE_IDENTIFIER = dev.thiagofontes.pistache
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2023 dev.thiagofontes.myclasses. All rights reserved.

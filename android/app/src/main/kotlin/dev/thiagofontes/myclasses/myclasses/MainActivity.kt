@@ -1,4 +1,4 @@
-package dev.thiagofontes.myclasses.myclasses
+package dev.thiagofontes.pistache
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,0 +1,20 @@
+
+# Material Theme Builder Flutter Export
+
+## Basics
+
+This archive contains a number of files defining a Material 3 theme:
+
+ * colors_schemes.g.dart        - contains all colors used by your theme
+ * main.g.dart                  - sample MyApp file using the generated color scheme
+
+Your colors and schemes will be generated in a color_schemes.g.dart file to avoid collision
+with other files that may exist in your project. A template My App file has been included for 
+your convenience. You will need to replace the home with your content.
+
+https://m3.material.io/theme-builder#/custom
+
+- Primary: #d97d00
+- Secondary: #a98b72
+- Tertiary: #F2CB05
+- Neutral: #988f89

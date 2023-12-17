@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "15089311660",
+    "project_id": "pistache-40b12",
+    "storage_bucket": "pistache-40b12.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:15089311660:android:5d33434af85e8378396409",
+        "android_client_info": {
+          "package_name": "dev.thiagofontes.pistache"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjjxic0l__4GdvRI9L1G0GZIeOD5JRoPQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
