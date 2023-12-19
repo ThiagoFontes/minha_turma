@@ -8,16 +8,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myclasses/src/utils/states/snapshot_states.dart';
 
-class FirestoreTestPage extends StatefulWidget {
-  const FirestoreTestPage({super.key});
+class TestFirestorePage extends StatefulWidget {
+  const TestFirestorePage({super.key});
 
   static const String route = '/test_firestore';
 
   @override
-  State<FirestoreTestPage> createState() => _FirestoreTestPageState();
+  State<TestFirestorePage> createState() => _TestFirestorePageState();
 }
 
-class _FirestoreTestPageState extends State<FirestoreTestPage> {
+class _TestFirestorePageState extends State<TestFirestorePage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final db = FirebaseFirestore.instance;
 

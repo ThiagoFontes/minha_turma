@@ -21,47 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
       final theme = Theme.of(context);
-      return Builder(
-        builder: (context) {
-          return Center(
-            child: Card(
-              margin: const EdgeInsets.all(16),
-              color: theme.colorScheme.onError,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Erro:',
-                      style: theme.textTheme.bodyLarge
-                          ?.copyWith(color: theme.colorScheme.error),
-                    ),
-                    Text(
-                      errorDetails.exceptionAsString(),
-                      style: theme.textTheme.bodyMedium
-                          ?.copyWith(color: theme.colorScheme.error),
-                    ),
-                    const SizedBox(height: 16),
-                    Center(
-                      child: OutlinedButton(
-                        onPressed: () => context.pushNamed('/'),
-                        child: Text(
-                          'Reload',
-                          style: theme.textTheme.bodyLarge
-                              ?.copyWith(color: theme.colorScheme.error),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
-      );
+      return RedErrorWidget(theme: theme, errorDetails: errorDetails);
     };
 
     // Glue the SettingsController to the MaterialApp.
@@ -131,6 +91,85 @@ class MyApp extends StatelessWidget {
           );
         });
       },
+    );
+  }
+}
+
+class RedErrorWidget extends StatefulWidget {
+  const RedErrorWidget({
+    super.key,
+    required this.theme,
+    required this.errorDetails,
+  });
+
+  final ThemeData theme;
+  final FlutterErrorDetails errorDetails;
+
+  @override
+  State<RedErrorWidget> createState() => _RedErrorWidgetState();
+}
+
+class _RedErrorWidgetState extends State<RedErrorWidget> {
+  bool isOpen = false;
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: Center(
+        child: Card(
+          margin: const EdgeInsets.all(16),
+          color: widget.theme.colorScheme.onError,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ExpansionPanelList(
+                  expansionCallback: (panelIndex, isExpanded) => setState(() {
+                    isOpen = isExpanded;
+                  }),
+                  children: [
+                    ExpansionPanel(
+                      isExpanded: isOpen,
+                      headerBuilder: (context, expanded) => Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Erro:',
+                            style: widget.theme.textTheme.bodyLarge?.copyWith(
+                                color: widget.theme.colorScheme.error),
+                          ),
+                        ),
+                      ),
+                      body: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          widget.errorDetails.exceptionAsString(),
+                          style: widget.theme.textTheme.bodyMedium
+                              ?.copyWith(color: widget.theme.colorScheme.error),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Center(
+                  child: OutlinedButton(
+                    onPressed: () => context.pushNamed('/'),
+                    child: Text(
+                      'Reload',
+                      style: widget.theme.textTheme.bodyLarge
+                          ?.copyWith(color: widget.theme.colorScheme.error),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

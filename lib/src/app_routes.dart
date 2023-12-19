@@ -2,7 +2,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:myclasses/src/features/firestore_test/firestore_test_page.dart';
+import 'package:myclasses/src/features/firebase_auth_test/test_firebase_auth_page.dart';
+import 'package:myclasses/src/features/firestore_test/test_firestore_page.dart';
 import 'package:myclasses/src/features/home_coach/add_student_page.dart';
 import 'package:myclasses/src/features/home_coach/home_coach_page.dart';
 import 'package:myclasses/src/features/home_coach/list_goals_page.dart';
@@ -13,8 +14,9 @@ typedef RouterBuilder = Widget Function(BuildContext, GoRouterState);
 abstract class AppRoutes {
   static final _routesMap = <String, RouterBuilder>{
     LoginView.route: (context, state) => const LoginView(),
-    FirestoreTestPage.route: (context, state) => const FirestoreTestPage(),
-    HomeCoachPage.route: (context, state) => const HomeCoachPage(),
+    TestFirestorePage.route: (context, state) => const TestFirestorePage(),
+    TestFirebaseAuthPage.route: (p0, p1) => const TestFirebaseAuthPage(),
+    HomeCoachPage.route: (context, state) => HomeCoachPage(),
     AddStudentPage.route: (p0, p1) => const AddStudentPage(),
     ListGoalsPage.route: (p0, p1) => ListGoalsPage(),
     // HomePage.route: (context, _) => const HomePage(),
