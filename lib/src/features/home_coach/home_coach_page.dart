@@ -9,6 +9,7 @@ import 'package:myclasses/src/features/home_coach/list_goals_page.dart';
 import 'package:myclasses/src/features/home_coach/vmodels/cards_home_vmodel.dart';
 import 'package:myclasses/src/features/home_coach/widgets/profile_app_bar.dart';
 import 'package:myclasses/src/features/home_coach/widgets/square_button.dart';
+import 'package:myclasses/src/utils/widgets/error/messages.dart';
 
 class HomeCoachPage extends StatelessWidget {
   static const String route = '/home_coach';
@@ -67,6 +68,10 @@ class HomeCoachPage extends StatelessWidget {
               OutlinedButton(
                 onPressed: () => context.pushNamed(TestFirebaseAuthPage.route),
                 child: const Text('Auth Test'),
+              ),
+              OutlinedButton(
+                onPressed: () => Messages.info(message: 'Info test'),
+                child: const Text('Dialog info'),
               ),
             ],
           ),

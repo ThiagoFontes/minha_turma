@@ -8,6 +8,7 @@ import 'package:myclasses/src/features/home_coach/add_student_page.dart';
 import 'package:myclasses/src/features/home_coach/home_coach_page.dart';
 import 'package:myclasses/src/features/home_coach/list_goals_page.dart';
 import 'package:myclasses/src/features/login/login_view.dart';
+import 'package:myclasses/src/features/profile/profile_page.dart';
 
 typedef RouterBuilder = Widget Function(BuildContext, GoRouterState);
 
@@ -16,7 +17,8 @@ abstract class AppRoutes {
     LoginView.route: (context, state) => const LoginView(),
     TestFirestorePage.route: (context, state) => const TestFirestorePage(),
     TestFirebaseAuthPage.route: (p0, p1) => const TestFirebaseAuthPage(),
-    HomeCoachPage.route: (context, state) => HomeCoachPage(),
+    HomeCoachPage.route: (context, state) => const HomeCoachPage(),
+    ProfilePage.route: (p0, p1) => const ProfilePage(),
     AddStudentPage.route: (p0, p1) => const AddStudentPage(),
     ListGoalsPage.route: (p0, p1) => ListGoalsPage(),
     // HomePage.route: (context, _) => const HomePage(),

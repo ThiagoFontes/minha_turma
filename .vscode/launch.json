@@ -7,7 +7,8 @@
         {
             "name": "minha_turma",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "flutterMode": "debug"
         },
         {
             "name": "minha_turma (profile mode)",

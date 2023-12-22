@@ -5,8 +5,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:myclasses/firebase_options.dart';
-import 'package:myclasses/src/app_routes.dart';
-import 'package:myclasses/src/utils/firebase/auth_service.dart';
 
 import 'src/app.dart';
 import 'src/settings/settings_controller.dart';
@@ -31,8 +29,6 @@ void main() async {
       const PersistenceSettings(synchronizeTabs: true),
     );
   }
-
-  AuthService.loginListener(navigatorKey: AppRoutes.navigatorKey);
 
   // if (kDebugMode) {
   //   try {

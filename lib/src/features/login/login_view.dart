@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myclasses/src/utils/localization/l10n.dart';
-import 'package:myclasses/src/utils/widgets/error/dialog_mixin.dart';
+import 'package:myclasses/src/utils/widgets/error/messages.dart';
 import 'package:myclasses/src/utils/widgets/text_input/email_field.dart';
 // import 'package:flutter_svg/svg.dart';
 // import 'package:go_router/go_router.dart';
@@ -196,40 +196,42 @@ class _LoginViewState extends State<LoginView> {
           log('The password provided is too weak.');
           log(e.toString());
           if (!mounted) return;
-          dialogError(context: context, error: l10n.weakPassword);
+          Messages.error(error: l10n.weakPassword);
         } else if (e.code == 'email-already-in-use') {
           log('The account already exists for that email.');
           log(e.toString());
-          // Dialogs.error(
-          //   context,
-          //   error: l10n.emailRegisteredError,
-          // );
+          Messages.error(
+            error: l10n.emailRegisteredError,
+          );
         }
       } catch (e) {
         log(e.toString());
-        // Dialogs.error(context, error: e.toString());
+        Messages.error(error: e.toString());
       }
     }
   }
 
   Future<void> signIn() async {
     final FirebaseAuth auth = FirebaseAuth.instance;
+    final l10n = context.l10n;
 
-      if (_formKey.currentState!.validate()) {
-        _formKey.currentState!.save();
-        TextInput.finishAutofillContext();
-        try {
-          final credential = await auth.signInWithEmailAndPassword(
-            email: _email!,
-            password: _password!,
-          );
-          log(credential.user?.uid ?? '');
-          // Successfully signed in
-          // You can navigate to another screen here
-        } catch (e) {
-          log(e.toString());
-          // Dialogs.error(context, error: context.l10n.invalidLogin);
-        }
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      TextInput.finishAutofillContext();
+      try {
+        final credential = await auth.signInWithEmailAndPassword(
+          email: _email!,
+          password: _password!,
+        );
+        log(credential.user?.uid ?? '');
+        // Successfully signed in
+        // You can navigate to another screen here
+      } on FirebaseAuthException catch (e) {
+        log(e.toString());
+        Messages.error(
+          error: '${l10n.invalidLogin}\n${e.message}',
+        );
       }
+    }
   }
 }

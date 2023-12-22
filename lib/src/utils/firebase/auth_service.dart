@@ -4,16 +4,19 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myclasses/src/app_routes.dart';
 import 'package:myclasses/src/features/home_coach/home_coach_page.dart';
 import 'package:myclasses/src/features/login/login_view.dart';
+import 'package:myclasses/src/utils/widgets/error/messages.dart';
 
 abstract class AuthService {
-  static StreamSubscription<User?> loginListener({
-    required GlobalKey<NavigatorState> navigatorKey,
-  }) {
+  static StreamSubscription<User?> loginListener() {
+    FirebaseAuth.instance.userChanges().listen((event) {
+      log('### message');
+    });
     final listener = FirebaseAuth.instance.authStateChanges().listen(
       (User? user) {
-        final context = navigatorKey.currentContext;
+        final context = AppRoutes.navigatorKey.currentContext;
         if (context == null) return;
 
         if (user == null) {
@@ -22,7 +25,7 @@ abstract class AuthService {
           Navigator.of(context).popUntil((route) => route.isFirst);
           context.goNamed(LoginView.route);
 
-          // Dialogs.info(context, message: 'Usuário deslogado');
+          // Messages.info(message: 'Usuário deslogado');
         } else {
           log('User is signed in!');
           log(FirebaseAuth.instance.currentUser.toString());
@@ -31,14 +34,10 @@ abstract class AuthService {
           // }
         }
       },
-      onError: (error) async {
-        final context = navigatorKey.currentContext;
-
+      onError: (error) {
         log(error);
-
-        if (context != null) {
-          // Dialogs.error(context, error: error.toString());
-        }
+        log('Her');
+        Messages.error(error: error.toString());
       },
     );
 
