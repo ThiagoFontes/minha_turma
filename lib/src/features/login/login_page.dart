@@ -17,16 +17,16 @@ import 'package:myclasses/src/utils/widgets/text_input/email_field.dart';
 // import '../../error/dialog_mixin.dart';
 // import '../settings/settings_page.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   static const route = '/';
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _LoginPageState extends State<LoginPage> {
   // final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? _email, _password;
@@ -190,6 +190,8 @@ class _LoginViewState extends State<LoginView> {
           email: _email!,
           password: _password!,
         );
+
+        
         log(credential.user?.uid ?? '');
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {

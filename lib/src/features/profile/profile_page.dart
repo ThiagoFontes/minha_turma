@@ -27,9 +27,20 @@ class _ProfilePageState extends State<ProfilePage> {
       body: StreamBuilder(
         stream: userService.getUserInfo(),
         builder: (context, snapshot) {
+          final user = snapshot.data;
           return SnapshotStates(
             snapshot: snapshot,
-            child: Text(snapshot.data.toString()),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('User name: ${user?.name}'),
+                  Text('Permissões: ${user?.roles.join(', ')}'),
+                  Text('Invite code: ${user?.inviteCode}'),
+                ],
+              ),
+            ),
           );
         },
       ),

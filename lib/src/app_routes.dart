@@ -6,29 +6,34 @@ import 'package:myclasses/src/features/firebase_auth_test/test_firebase_auth_pag
 import 'package:myclasses/src/features/firestore_test/test_firestore_page.dart';
 import 'package:myclasses/src/features/home_coach/add_student_page.dart';
 import 'package:myclasses/src/features/home_coach/home_coach_page.dart';
+import 'package:myclasses/src/features/home_coach/home_notifier.dart';
 import 'package:myclasses/src/features/home_coach/list_goals_page.dart';
-import 'package:myclasses/src/features/login/login_view.dart';
+import 'package:myclasses/src/features/login/login_page.dart';
+import 'package:myclasses/src/features/profile/profile_notifier.dart';
 import 'package:myclasses/src/features/profile/profile_page.dart';
+import 'package:provider/provider.dart';
 
 typedef RouterBuilder = Widget Function(BuildContext, GoRouterState);
 
 abstract class AppRoutes {
   static final _routesMap = <String, RouterBuilder>{
-    LoginView.route: (context, state) => const LoginView(),
+    HomeCoachPage.route: (context, state) {
+      return ChangeNotifierProvider(
+        create: (context) => HomeNotifier(),
+        child: const HomeCoachPage(),
+      );
+    },
+    ProfilePage.route: (p0, p1) {
+      return ChangeNotifierProvider(
+        create: (context) => ProfileNotifier(),
+        child: const ProfilePage(),
+      );
+    },
+    LoginPage.route: (context, state) => const LoginPage(),
     TestFirestorePage.route: (context, state) => const TestFirestorePage(),
     TestFirebaseAuthPage.route: (p0, p1) => const TestFirebaseAuthPage(),
-    HomeCoachPage.route: (context, state) => const HomeCoachPage(),
-    ProfilePage.route: (p0, p1) => const ProfilePage(),
     AddStudentPage.route: (p0, p1) => const AddStudentPage(),
     ListGoalsPage.route: (p0, p1) => ListGoalsPage(),
-    // HomePage.route: (context, _) => const HomePage(),
-    // ViewMorePage.route: (context, state) => const ViewMorePage(),
-    // LoginPage.route: (context, _) => const LoginPage(),
-    // ForgotPasswordPage.route: (context, _) => const ForgotPasswordPage(),
-    // SettingsPage.route: (context, _) => const SettingsPage(),
-    // CreateEntryPage.route: (context, state) => CreateEntryPage(
-    //       editEntry: state.extra as EntryModel?,
-    //     ),
   };
 
   static List<GoRoute> get routes {
@@ -57,7 +62,7 @@ abstract class AppRoutes {
     redirect: (context, state) async {
       final user = FirebaseAuth.instance.currentUser;
 
-      if (user != null && state.fullPath == LoginView.route) {
+      if (user != null && state.fullPath == LoginPage.route) {
         return HomeCoachPage.route;
       }
 

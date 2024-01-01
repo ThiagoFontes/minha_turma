@@ -1,40 +1,75 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myclasses/src/app_routes.dart';
 import 'package:myclasses/src/features/firebase_auth_test/test_firebase_auth_page.dart';
 import 'package:myclasses/src/features/firestore_test/test_firestore_page.dart';
 import 'package:myclasses/src/features/home_coach/add_student_page.dart';
+import 'package:myclasses/src/features/home_coach/home_notifier.dart';
 import 'package:myclasses/src/features/home_coach/list_goals_page.dart';
 import 'package:myclasses/src/features/home_coach/vmodels/cards_home_vmodel.dart';
 import 'package:myclasses/src/features/home_coach/widgets/profile_app_bar.dart';
 import 'package:myclasses/src/features/home_coach/widgets/square_button.dart';
+import 'package:myclasses/src/features/profile/profile_page.dart';
+import 'package:myclasses/src/utils/material_theme/theme_extension.dart';
 import 'package:myclasses/src/utils/widgets/error/messages.dart';
 
-class HomeCoachPage extends StatelessWidget {
+class HomeCoachPage extends StatefulWidget {
   static const String route = '/home_coach';
 
   const HomeCoachPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final cards = <CardsHomeVModel>[
-      CardsHomeVModel(
+  State<HomeCoachPage> createState() => _HomeCoachPageState();
+}
+
+class _HomeCoachPageState extends State<HomeCoachPage> {
+  final cards = <CardsHomeVModel>[
+    CardsHomeVModel(
         title: 'Metas',
         icon: Icons.auto_graph,
         onTap: () => AppRoutes.router.pushNamed(ListGoalsPage.route),
-      ),
-      CardsHomeVModel(
+        roles: ['user']),
+    CardsHomeVModel(
         title: 'Alunos',
-        icon: Icons.person,
-        onTap: () => AppRoutes.router.pushNamed(AddStudentPage.route),
-      ),
-      CardsHomeVModel(
-        title: 'Grupos',
         icon: Icons.people,
         onTap: () => AppRoutes.router.pushNamed(AddStudentPage.route),
-      ),
-    ];
+        roles: ['coach']),
+    CardsHomeVModel(
+        title: 'Grupos',
+        icon: Icons.groups,
+        onTap: () => AppRoutes.router.pushNamed(AddStudentPage.route),
+        roles: ['coach']),
+    CardsHomeVModel(
+      title: 'Perfil',
+      icon: Icons.person,
+      onTap: () => AppRoutes.router.pushNamed(ProfilePage.route),
+      roles: ['user'],
+    ),
+  ];
+
+  @override
+  void initState() {
+    context.read<HomeNotifier>().initHome();
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isAdmin = context.select<HomeNotifier, bool>(
+      (home) => home.user?.roles.contains('admin') ?? false,
+    );
+    final userRoles = context.select<HomeNotifier, List<String>>(
+      (home) => home.user?.roles ?? [],
+    );
+
+    final cardsToShow = List.from(cards);
+
+    cardsToShow.removeWhere(
+      (card) => !card.roles.any((element) => userRoles.contains(element)),
+    );
 
     return Scaffold(
       appBar: ProfileAppBar(
@@ -42,37 +77,50 @@ class HomeCoachPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16.0,
+            vertical: 8,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text(
+                'Gerenciar',
+                style: context.theme.textTheme.titleSmall,
+              ),
+              const SizedBox(height: 16),
               GridView.count(
                 physics: const NeverScrollableScrollPhysics(),
-                padding: const EdgeInsets.all(16),
                 mainAxisSpacing: 24,
                 crossAxisSpacing: 24,
                 shrinkWrap: true,
                 crossAxisCount: 2,
                 childAspectRatio: 2 / 1,
                 children: List.generate(
-                  cards.length,
+                  cardsToShow.length,
                   (index) => CardButton(
-                    cardVModel: cards[index],
+                    cardVModel: cardsToShow[index],
                   ),
                 ),
               ),
-              OutlinedButton(
-                onPressed: () => context.pushNamed(TestFirestorePage.route),
-                child: const Text('DB test'),
-              ),
-              OutlinedButton(
-                onPressed: () => context.pushNamed(TestFirebaseAuthPage.route),
-                child: const Text('Auth Test'),
-              ),
-              OutlinedButton(
-                onPressed: () => Messages.info(message: 'Info test'),
-                child: const Text('Dialog info'),
-              ),
+              const SizedBox(height: 32),
+              const CheckGoalsWidget(),
+              const SizedBox(height: 32),
+              if (isAdmin) ...[
+                OutlinedButton(
+                  onPressed: () => context.pushNamed(TestFirestorePage.route),
+                  child: const Text('DB test'),
+                ),
+                OutlinedButton(
+                  onPressed: () =>
+                      context.pushNamed(TestFirebaseAuthPage.route),
+                  child: const Text('Auth Test'),
+                ),
+                OutlinedButton(
+                  onPressed: () => Messages.info(message: 'Info test'),
+                  child: const Text('Dialog info'),
+                ),
+              ],
             ],
           ),
         ),
@@ -96,6 +144,45 @@ class HomeCoachPage extends StatelessWidget {
       //   unselectedItemColor: theme.colorScheme.onBackground,
       //   backgroundColor: theme.colorScheme.background,
       // ),
+    );
+  }
+}
+
+class CheckGoalsWidget extends StatelessWidget {
+  const CheckGoalsWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 120,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: context.theme.colorScheme.primaryContainer,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          CircularProgressIndicator(
+            value: 0.3,
+            backgroundColor: context.theme.canvasColor.withOpacity(0.5),
+          ),
+          const SizedBox(width: 16),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Não esqueça de conferir suas metas',
+                style: context.theme.textTheme.titleMedium,
+              ),
+              const Text('10 de 30 concluídas'),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

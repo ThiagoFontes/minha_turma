@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myclasses/src/app_routes.dart';
-import 'package:myclasses/src/utils/firebase/auth_service.dart';
+import 'package:myclasses/src/utils/firebase/listeners/auth_listener.dart';
 import 'package:myclasses/src/utils/localization/l10n.dart';
 import 'package:myclasses/src/utils/material_theme/color_schemes.g.dart';
 
@@ -25,7 +25,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    AuthService.loginListener();
+    AuthListener.loginListener();
     super.initState();
   }
 

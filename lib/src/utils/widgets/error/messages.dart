@@ -55,4 +55,17 @@ abstract class Messages {
     }
     return null;
   }
+
+  static Future<T?> show<T>(Widget message) async {
+    final context = AppRoutes.navigatorKey.currentContext;
+    if (context != null) {
+      return await showDialog<T>(
+        context: context,
+        builder: (BuildContext context) {
+          return message;
+        },
+      );
+    }
+    return null;
+  }
 }
