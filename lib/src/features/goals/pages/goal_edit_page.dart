@@ -86,7 +86,7 @@ class _GoalEditPageState extends State<GoalEditPage> {
                       label: 'Tarefa única',
                     ),
                     DropdownMenuEntry(
-                      value: 'todo',
+                      value: 'periodic_day',
                       label: 'Tarefa diária',
                     ),
                     DropdownMenuEntry(

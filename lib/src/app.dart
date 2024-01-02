@@ -6,6 +6,7 @@ import 'package:myclasses/src/app_routes.dart';
 import 'package:myclasses/src/utils/firebase/listeners/auth_listener.dart';
 import 'package:myclasses/src/utils/localization/l10n.dart';
 import 'package:myclasses/src/utils/material_theme/color_schemes.g.dart';
+import 'package:provider/provider.dart';
 
 import 'settings/settings_controller.dart';
 
@@ -13,10 +14,7 @@ import 'settings/settings_controller.dart';
 class MyApp extends StatefulWidget {
   const MyApp({
     super.key,
-    required this.settingsController,
   });
-
-  final SettingsController settingsController;
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -45,7 +43,7 @@ class _MyAppState extends State<MyApp> {
       behavior: HitTestBehavior.opaque,
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
       child: ListenableBuilder(
-        listenable: widget.settingsController,
+        listenable: context.read<SettingsController>(),
         builder: (BuildContext context, Widget? child) {
           return LayoutBuilder(builder: (context, constraints) {
             double? width;
@@ -84,8 +82,7 @@ class _MyAppState extends State<MyApp> {
                     colorScheme: darkColorScheme,
                     fontFamily: 'RobotoMono',
                   ),
-                  themeMode: widget.settingsController.themeMode,
-
+                  themeMode: context.read<SettingsController>().themeMode,
                   routerConfig: AppRoutes.router,
                 ),
               ),

@@ -38,6 +38,15 @@ class _ProfilePageState extends State<ProfilePage> {
                   Text('User name: ${user?.name}'),
                   Text('Permissões: ${user?.roles.join(', ')}'),
                   Text('Invite code: ${user?.inviteCode}'),
+                  const Spacer(),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: FilledButton(
+                      onPressed: FirebaseAuth.instance.signOut,
+                      child: const Text('Sair'),
+                    ),
+                  ),
+                  const SizedBox(height: 32),
                 ],
               ),
             ),

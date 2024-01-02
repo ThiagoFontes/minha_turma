@@ -1,7 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:myclasses/src/app_routes.dart';
 import 'package:myclasses/src/features/profile/profile_page.dart';
+import 'package:myclasses/src/settings/settings_controller.dart';
+import 'package:provider/provider.dart';
 
 class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
   const ProfileAppBar({
@@ -18,9 +19,11 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
     }
     buffer.write('!');
 
+    final settingsController = context.read<SettingsController>();
+
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Row(
           children: [
             GestureDetector(
@@ -35,9 +38,13 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
               children: [Text(buffer.toString())],
             ),
             const Spacer(),
-            TextButton(
-              onPressed: FirebaseAuth.instance.signOut,
-              child: const Text('Sair'),
+            GestureDetector(
+              child: Icon(
+                settingsController.themeMode == ThemeMode.light
+                    ? Icons.light_mode
+                    : Icons.dark_mode,
+              ),
+              onTap: () => settingsController.toggleThemeMode(),
             )
           ],
         ),
