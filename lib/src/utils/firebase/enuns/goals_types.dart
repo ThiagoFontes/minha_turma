@@ -1,0 +1,3 @@
+enum GoalsType {
+  water, periodic
+}

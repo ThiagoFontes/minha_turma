@@ -17,17 +17,19 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  if (Platform.isIOS || Platform.isAndroid) {
-    FirebaseFirestore.instance.settings = const Settings(
-      persistenceEnabled: true,
-      cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
-    );
-  }
-
   if (kIsWeb) {
     await FirebaseFirestore.instance.enablePersistence(
       const PersistenceSettings(synchronizeTabs: true),
     );
+  } else {
+    try {
+      if (Platform.isIOS || Platform.isAndroid) {
+        FirebaseFirestore.instance.settings = const Settings(
+          persistenceEnabled: true,
+          cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
+        );
+      }
+    } catch (_) {}
   }
 
   // if (kDebugMode) {

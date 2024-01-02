@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myclasses/src/features/firebase_auth_test/test_firebase_auth_page.dart';
 import 'package:myclasses/src/features/firestore_test/test_firestore_page.dart';
+import 'package:myclasses/src/features/goals/goals_routes.dart';
 import 'package:myclasses/src/features/home_coach/add_student_page.dart';
 import 'package:myclasses/src/features/home_coach/home_coach_page.dart';
 import 'package:myclasses/src/features/home_coach/home_notifier.dart';
-import 'package:myclasses/src/features/home_coach/list_goals_page.dart';
 import 'package:myclasses/src/features/login/login_page.dart';
 import 'package:myclasses/src/features/profile/profile_notifier.dart';
 import 'package:myclasses/src/features/profile/profile_page.dart';
@@ -33,7 +33,7 @@ abstract class AppRoutes {
     TestFirestorePage.route: (context, state) => const TestFirestorePage(),
     TestFirebaseAuthPage.route: (p0, p1) => const TestFirebaseAuthPage(),
     AddStudentPage.route: (p0, p1) => const AddStudentPage(),
-    ListGoalsPage.route: (p0, p1) => ListGoalsPage(),
+    ...goalsRoutes
   };
 
   static List<GoRoute> get routes {

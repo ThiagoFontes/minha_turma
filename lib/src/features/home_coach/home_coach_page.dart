@@ -5,9 +5,9 @@ import 'package:go_router/go_router.dart';
 import 'package:myclasses/src/app_routes.dart';
 import 'package:myclasses/src/features/firebase_auth_test/test_firebase_auth_page.dart';
 import 'package:myclasses/src/features/firestore_test/test_firestore_page.dart';
+import 'package:myclasses/src/features/goals/pages/goals_page.dart';
 import 'package:myclasses/src/features/home_coach/add_student_page.dart';
 import 'package:myclasses/src/features/home_coach/home_notifier.dart';
-import 'package:myclasses/src/features/home_coach/list_goals_page.dart';
 import 'package:myclasses/src/features/home_coach/vmodels/cards_home_vmodel.dart';
 import 'package:myclasses/src/features/home_coach/widgets/profile_app_bar.dart';
 import 'package:myclasses/src/features/home_coach/widgets/square_button.dart';
@@ -29,7 +29,7 @@ class _HomeCoachPageState extends State<HomeCoachPage> {
     CardsHomeVModel(
         title: 'Metas',
         icon: Icons.auto_graph,
-        onTap: () => AppRoutes.router.pushNamed(ListGoalsPage.route),
+        onTap: () => AppRoutes.router.pushNamed(GoalsPage.route),
         roles: ['user']),
     CardsHomeVModel(
         title: 'Alunos',
@@ -155,33 +155,33 @@ class CheckGoalsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 120,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: context.theme.colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          CircularProgressIndicator(
-            value: 0.3,
-            backgroundColor: context.theme.canvasColor.withOpacity(0.5),
-          ),
-          const SizedBox(width: 16),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Não esqueça de conferir suas metas',
-                style: context.theme.textTheme.titleMedium,
+    return Card(
+      color: context.theme.colorScheme.primaryContainer,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            CircularProgressIndicator(
+              value: 0.3,
+              backgroundColor: context.theme.canvasColor.withOpacity(0.5),
+            ),
+            const SizedBox(width: 16),
+            Flexible(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Não esqueça de conferir suas metas',
+                    style: context.theme.textTheme.titleMedium,
+                  ),
+                  const Text('10 de 30 concluídas'),
+                ],
               ),
-              const Text('10 de 30 concluídas'),
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }
