@@ -23,8 +23,13 @@ class SnapshotStates extends StatelessWidget {
     }
 
     if (snapshot.connectionState == ConnectionState.waiting) {
-      return const Center(
-        child: CircularProgressIndicator(),
+      final query = MediaQuery.of(context);
+      return SizedBox(
+        height:
+            query.size.height - query.padding.vertical - kToolbarHeight - 80,
+        child: const Center(
+          child: CircularProgressIndicator(),
+        ),
       );
     }
 

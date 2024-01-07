@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myclasses/src/features/firebase_auth_test/test_firebase_auth_page.dart';
+import 'package:myclasses/src/features/firestore_test/dev_test_page.dart';
 import 'package:myclasses/src/features/firestore_test/test_firestore_page.dart';
 import 'package:myclasses/src/features/goals/goals_routes.dart';
 import 'package:myclasses/src/features/home/home_coach_page.dart';
@@ -33,6 +34,7 @@ abstract class AppRoutes {
     TestFirestorePage.route: (context, state) => const TestFirestorePage(),
     TestFirebaseAuthPage.route: (p0, p1) => const TestFirebaseAuthPage(),
     StudentListPage.route: (p0, p1) => const StudentListPage(),
+    DevTestPage.route: (p0, p1) => const DevTestPage(),
     ...goalsRoutes
   };
 
@@ -61,11 +63,11 @@ abstract class AppRoutes {
     navigatorKey: navigatorKey,
     redirect: (context, state) async {
       final redirect = RedirectRunner.choose(
-        [
+        route: state.fullPath,
+        chain: [
           LoggedOffChain(),
           LoggedInChain(),
         ],
-        state.fullPath,
       );
 
       return redirect;

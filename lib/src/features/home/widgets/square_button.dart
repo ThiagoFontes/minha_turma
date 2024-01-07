@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myclasses/src/features/home_coach/vmodels/cards_home_vmodel.dart';
+import 'package:myclasses/src/features/home/vmodels/cards_home_vmodel.dart';
 import 'package:myclasses/src/utils/material_theme/theme_extension.dart';
 
 class CardButton extends StatelessWidget {

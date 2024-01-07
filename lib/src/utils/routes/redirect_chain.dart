@@ -15,15 +15,22 @@ abstract class RedirectChain<T, R> {
 class RedirectRunner {
   RedirectRunner._();
 
-  static String? choose(List<RedirectChain> chain, String? route) {
+  static String? choose({
+    required List<RedirectChain> chain,
+    required String? route,
+    bool logs = false,
+  }) {
     for (final element in chain) {
-      element.logCurrent();
+      if (logs) {
+        element.logCurrent();
+      }
+      
       final result = element.run(route);
       if (result != null) {
         return result;
       }
     }
-    return null;
+    return route;
   }
 }
 

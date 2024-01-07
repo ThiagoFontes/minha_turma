@@ -14,7 +14,6 @@ class UserService {
       return db
           .doc('users/${currentUser.uid}')
           .snapshots()
-          .where((event) => event.exists)
           .map(
             (event) => UserModel.fromMap(event.data() ?? {}),
           );

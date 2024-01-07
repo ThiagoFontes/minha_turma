@@ -34,3 +34,4 @@ apps](https://flutter.dev/docs/development/accessibility-and-localization/intern
 ## Builds
 
 flutter build web --release --web-renderer html
+firebase deploy

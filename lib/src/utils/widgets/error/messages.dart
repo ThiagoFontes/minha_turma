@@ -29,6 +29,10 @@ abstract class Messages {
     return null;
   }
 
+  static Future<void> todo() async {
+    await info(message: 'Opa ainda estamos desenvolvendo essa funcionalidade');
+  }
+
   static Future<T?> info<T>({
     required String message,
     String? title,

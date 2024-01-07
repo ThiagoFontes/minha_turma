@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myclasses/src/features/profile/profile_notifier.dart';
 import 'package:myclasses/src/utils/material_theme/theme_extension.dart';
 import 'package:provider/provider.dart';
@@ -37,6 +38,11 @@ class _FillProfileWidgetState extends State<FillProfileWidget> {
                 Text(
                   'Complete seu Perfil',
                   style: theme.textTheme.titleMedium,
+                ),
+                const Spacer(),
+                FilledButton(
+                  onPressed: () => context.pop(),
+                  child: const Text('Fechar'),
                 )
               ],
             ),

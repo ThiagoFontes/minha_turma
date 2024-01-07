@@ -10,6 +10,6 @@ class CardsHomeVModel {
     required this.title,
     required this.icon,
     required this.onTap,
-    required this.roles,
+    this.roles = const [],
   });
 }

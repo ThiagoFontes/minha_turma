@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myclasses/src/app_routes.dart';
-import 'package:myclasses/src/features/home_coach/home_coach_page.dart';
+import 'package:myclasses/src/features/home/home_coach_page.dart';
 import 'package:myclasses/src/features/login/login_page.dart';
 import 'package:myclasses/src/utils/widgets/error/messages.dart';
 
@@ -33,7 +33,6 @@ abstract class AuthListener {
       },
       onError: (error) {
         log(error);
-        log('Her');
         Messages.error(error: error.toString());
       },
     );

@@ -14,7 +14,7 @@ class GoalsService {
       return db
           .collection('coaches/$userId/goals')
           .snapshots()
-          .where((event) => event.docs.isNotEmpty)
+          .handleError((error) => print('error'))
           .map(
         (query) {
           return query.docs
