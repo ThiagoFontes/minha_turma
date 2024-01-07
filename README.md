@@ -30,3 +30,7 @@ To support additional languages, please visit the tutorial on
 apps](https://flutter.dev/docs/development/accessibility-and-localization/internationalization)
 
 * flutter gen-l10n
+
+## Builds
+
+flutter build web --release --web-renderer html

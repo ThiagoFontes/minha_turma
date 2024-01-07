@@ -1,16 +1,16 @@
 // import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myclasses/src/features/firebase_auth_test/test_firebase_auth_page.dart';
 import 'package:myclasses/src/features/firestore_test/test_firestore_page.dart';
 import 'package:myclasses/src/features/goals/goals_routes.dart';
-import 'package:myclasses/src/features/home_coach/add_student_page.dart';
-import 'package:myclasses/src/features/home_coach/home_coach_page.dart';
-import 'package:myclasses/src/features/home_coach/home_notifier.dart';
+import 'package:myclasses/src/features/home/home_coach_page.dart';
+import 'package:myclasses/src/features/home/home_notifier.dart';
+import 'package:myclasses/src/features/home/student_list_page.dart';
 import 'package:myclasses/src/features/login/login_page.dart';
 import 'package:myclasses/src/features/profile/profile_notifier.dart';
 import 'package:myclasses/src/features/profile/profile_page.dart';
+import 'package:myclasses/src/utils/routes/redirect_chain.dart';
 import 'package:provider/provider.dart';
 
 typedef RouterBuilder = Widget Function(BuildContext, GoRouterState);
@@ -32,7 +32,7 @@ abstract class AppRoutes {
     LoginPage.route: (context, state) => const LoginPage(),
     TestFirestorePage.route: (context, state) => const TestFirestorePage(),
     TestFirebaseAuthPage.route: (p0, p1) => const TestFirebaseAuthPage(),
-    AddStudentPage.route: (p0, p1) => const AddStudentPage(),
+    StudentListPage.route: (p0, p1) => const StudentListPage(),
     ...goalsRoutes
   };
 
@@ -60,13 +60,15 @@ abstract class AppRoutes {
     routes: routes,
     navigatorKey: navigatorKey,
     redirect: (context, state) async {
-      final user = FirebaseAuth.instance.currentUser;
+      final redirect = RedirectRunner.choose(
+        [
+          LoggedOffChain(),
+          LoggedInChain(),
+        ],
+        state.fullPath,
+      );
 
-      if (user != null && state.fullPath == LoginPage.route) {
-        return HomeCoachPage.route;
-      }
-
-      return null;
+      return redirect;
     },
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance)
